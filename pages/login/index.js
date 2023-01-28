@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import styled from 'styled-components';
 import { useMutation, gql } from '@apollo/client';
 import { useRouter } from 'next/router';
@@ -27,15 +27,24 @@ function Login() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
-  const [loginUser, { data }] = useMutation(LOGIN_USER);
   const router = useRouter();
 
-  useEffect(() => {
-    if (data && data.loginUser && data.loginUser.token) {
-      sessionStorage.setItem('token', data.loginUser.token);
-      router.push('/');
+  const [loginUser] = useMutation(
+    LOGIN_USER,
+    {
+      variables: { username, password },
+
+      onCompleted: (data) => {
+        if (data && data.loginUser && data.loginUser.token) {
+          sessionStorage.setItem('token', data.loginUser.token);
+          router.push('/');
+        } else {
+          router.push('/login');
+        }
+
+      },
     }
-  }, [data]);
+  );
 
   return (
     <>
@@ -44,7 +53,7 @@ function Login() {
         <form
           onSubmit={(e) => {
             e.preventDefault();
-            loginUser({ variables: { username, password } });
+            loginUser();
           }}
         >
           <FormItem
