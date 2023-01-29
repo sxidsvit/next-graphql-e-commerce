@@ -92,17 +92,16 @@ const resolvers = {
 
       return cart;
     },
-    completeCart: (_, { }, { token }) => {
-      console.log('completeCart - token: ', token);
-      // TODO: Check if there is a token in the context of the resolver
-      // if (token && isTokenValid(token)) {
-      cart = {
-        count: 0,
-        products: [],
-        complete: true,
-      };
-      return cart;
-      // }
+    completeCart: (_, { }, context) => {
+      const token = context?.headers?.authorization.split(' ')[1]
+      if (token && isTokenValid(token)) {
+        cart = {
+          count: 0,
+          products: [],
+          complete: true,
+        };
+        return cart;
+      }
     },
   },
 };
