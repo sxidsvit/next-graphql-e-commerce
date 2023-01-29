@@ -43,7 +43,6 @@ const COMPLETE_CART = gql`
 
 function Cart() {
   const { loading, data } = useQuery(GET_CART);
-  console.log('Cart data: ', data);
   const [completeCard] = useMutation(COMPLETE_CART);
   const route = useRouter();
 
