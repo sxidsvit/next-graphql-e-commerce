@@ -21,14 +21,14 @@ function Header() {
   return (
     <>
       <Head>
-        <title>E-Commerce Store</title>
+        <title>Online store</title>
         <meta
           name='description'
-          content='This is a E-Commerce Store build with React'
+          content='Online store build with Next.js and GraphQL support'
         />
       </Head>
       <HeaderWrapper>
-        <Title>E-Commerce Store</Title>
+        <Title>Online store</Title>
       </HeaderWrapper>
     </>
   );

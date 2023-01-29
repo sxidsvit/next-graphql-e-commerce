@@ -33,11 +33,9 @@ function Products() {
         <span>Loading...</span>
       ) : (
         <ProductItemsWrapper>
-          {data &&
-            data.products &&
-            data.products.map((product) => (
-              <ProductItem key={product.id} data={product} addToCart />
-            ))}
+          {data?.products?.map((product) => (
+            <ProductItem key={product.id} data={product} addToCart />
+          ))}
         </ProductItemsWrapper>
       )}
     </>

@@ -43,6 +43,7 @@ const COMPLETE_CART = gql`
 
 function Cart() {
   const { loading, data } = useQuery(GET_CART);
+  console.log('Cart data: ', data);
   const [completeCard] = useMutation(COMPLETE_CART);
   const route = useRouter();
 
@@ -54,32 +55,38 @@ function Cart() {
       ) : (
         <CartWrapper>
           <CartItemsWrapper>
-            {data &&
-              data.cart.products &&
-              data.cart.products.map((product) => (
-                <ProductItem key={product.id} data={product} />
-              ))}
+            {console.log(JSON.stringify(data?.cart?.products, null, 2))}
+            {data?.cart?.products.map((product) => (
+              <ProductItem key={product.id} data={product} />
+            ))}
           </CartItemsWrapper>
           {data &&
             data.cart.products.length > 0 &&
-            sessionStorage.getItem('token') && (
-              <Button
-                backgroundColor='royalBlue'
-                onClick={() => {
-                  const isAuthenticated = sessionStorage.getItem('token');
+            sessionStorage.getItem('token') ? (
+            <Button
+              backgroundColor='royalBlue'
+              onClick={() => {
+                completeCard();
+                alert('Thanks for check out!');
+                route.push('/');
+              }}
+            >
+              Checkout
+            </Button>
+          ) : (
+            <Button
+              backgroundColor='royalBlue'
+              onClick={() => route.push('/login')}
+            >
+              Firstly login
+            </Button>
+          )
 
-                  if (isAuthenticated) {
-                    completeCard();
-                    alert('Thanks! Cart is emptied');
-                    route.push('/');
-                  }
-                }}
-              >
-                Checkout
-              </Button>
-            )}
+
+          }
         </CartWrapper>
-      )}
+      )
+      }
     </>
   );
 }

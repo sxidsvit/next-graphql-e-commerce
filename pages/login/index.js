@@ -36,8 +36,9 @@ function Login() {
 
       onCompleted: (data) => {
         if (data && data.loginUser && data.loginUser.token) {
+          sessionStorage.getItem('token') && sessionStorage.removeItem('token');
           sessionStorage.setItem('token', data.loginUser.token);
-          router.push('/');
+          router.push('/cart');
         } else {
           router.push('/login');
         }

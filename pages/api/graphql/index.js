@@ -82,7 +82,7 @@ const resolvers = {
           ...cart.products,
           {
             productId,
-            title: 'My product',
+            title: 'The best product',
             thumbnail: 'https://picsum.photos/400/400',
             price: (Math.random() * 99.0 + 1.0).toFixed(2),
             category: null,
@@ -93,15 +93,16 @@ const resolvers = {
       return cart;
     },
     completeCart: (_, { }, { token }) => {
-      if (token && isTokenValid(token)) {
-        cart = {
-          count: 0,
-          products: [],
-          complete: true,
-        };
-
-        return cart;
-      }
+      console.log('completeCart - token: ', token);
+      // TODO: Check if there is a token in the context of the resolver
+      // if (token && isTokenValid(token)) {
+      cart = {
+        count: 0,
+        products: [],
+        complete: true,
+      };
+      return cart;
+      // }
     },
   },
 };
@@ -136,7 +137,7 @@ async function handler(req, res) {
     res,
     graphqlHTTP({
       schema: executableSchema,
-      graphiql: true,
+      graphql: true,
     }),
   );
 
