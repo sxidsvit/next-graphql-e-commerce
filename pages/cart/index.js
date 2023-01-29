@@ -54,7 +54,6 @@ function Cart() {
       ) : (
         <CartWrapper>
           <CartItemsWrapper>
-            {console.log(JSON.stringify(data?.cart?.products, null, 2))}
             {data?.cart?.products.map((product) => (
               <ProductItem key={product.id} data={product} />
             ))}
